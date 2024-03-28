@@ -1,0 +1,410 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios17.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SwiftLocation
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import CoreLocation
+import Foundation
+import Swift
+@_exported import SwiftLocation
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class LocationServicesEnabled : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.LocationServicesEnabled.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didChangeLocationEnabled(_: Swift.Bool)
+      public var description: Swift.String {
+        get
+      }
+      public static func == (a: SwiftLocation.Tasks.LocationServicesEnabled.StreamEvent, b: SwiftLocation.Tasks.LocationServicesEnabled.StreamEvent) -> Swift.Bool
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.LocationServicesEnabled.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class LocatePermission : SwiftLocation.AnyTask {
+    public typealias Continuation = _Concurrency.CheckedContinuation<CoreLocation.CLAuthorizationStatus, any Swift.Error>
+    final public let uuid: Foundation.UUID
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class AccuracyAuthorization : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.AccuracyAuthorization.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didUpdateAccuracyAuthorization(_: CoreLocation.CLAccuracyAuthorization)
+      public var description: Swift.String {
+        get
+      }
+      public static func == (a: SwiftLocation.Tasks.AccuracyAuthorization.StreamEvent, b: SwiftLocation.Tasks.AccuracyAuthorization.StreamEvent) -> Swift.Bool
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.AccuracyAuthorization.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class ContinuousUpdateLocation : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.ContinuousUpdateLocation.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didUpdateLocations(_: [CoreLocation.CLLocation])
+      case didFailed(_: any Swift.Error)
+      case didResume
+      case didPaused
+      public var location: CoreLocation.CLLocation? {
+        get
+      }
+      public var locations: [CoreLocation.CLLocation]? {
+        get
+      }
+      public var error: (any Swift.Error)? {
+        get
+      }
+      public var description: Swift.String {
+        get
+      }
+      public static func == (lhs: SwiftLocation.Tasks.ContinuousUpdateLocation.StreamEvent, rhs: SwiftLocation.Tasks.ContinuousUpdateLocation.StreamEvent) -> Swift.Bool
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.ContinuousUpdateLocation.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    final public func didCancelled()
+    @objc deinit
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class SignificantLocationMonitoring : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.SignificantLocationMonitoring.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didPaused
+      case didResume
+      case didUpdateLocations(_: [CoreLocation.CLLocation])
+      case didFailWithError(_: any Swift.Error)
+      public var description: Swift.String {
+        get
+      }
+      public static func == (lhs: SwiftLocation.Tasks.SignificantLocationMonitoring.StreamEvent, rhs: SwiftLocation.Tasks.SignificantLocationMonitoring.StreamEvent) -> Swift.Bool
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.SignificantLocationMonitoring.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+@_hasMissingDesignatedInitializers public class SwiftLocationVersion {
+  public static let version: Swift.String
+  @objc deinit
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class AccuracyPermission : SwiftLocation.AnyTask {
+    public typealias Continuation = _Concurrency.CheckedContinuation<CoreLocation.CLAccuracyAuthorization, any Swift.Error>
+    final public let uuid: Foundation.UUID
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+public enum Tasks {
+}
+public protocol AnyTask : AnyObject {
+  var cancellable: (any SwiftLocation.CancellableTask)? { get set }
+  var uuid: Foundation.UUID { get }
+  var taskType: Swift.ObjectIdentifier { get }
+  func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+  func didCancelled()
+  func willStart()
+}
+extension SwiftLocation.AnyTask {
+  public var taskType: Swift.ObjectIdentifier {
+    get
+  }
+  public func didCancelled()
+  public func willStart()
+}
+public protocol CancellableTask : AnyObject {
+  func cancel(task: any SwiftLocation.AnyTask)
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class VisitsMonitoring : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.VisitsMonitoring.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didVisit(_: CoreLocation.CLVisit)
+      case didFailWithError(_: any Swift.Error)
+      public var description: Swift.String {
+        get
+      }
+      public static func == (lhs: SwiftLocation.Tasks.VisitsMonitoring.StreamEvent, rhs: SwiftLocation.Tasks.VisitsMonitoring.StreamEvent) -> Swift.Bool
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.VisitsMonitoring.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class HeadingMonitoring : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.HeadingMonitoring.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didUpdateHeading(_: CoreLocation.CLHeading)
+      case didFailWithError(_: any Swift.Error)
+      public static func == (lhs: SwiftLocation.Tasks.HeadingMonitoring.StreamEvent, rhs: SwiftLocation.Tasks.HeadingMonitoring.StreamEvent) -> Swift.Bool
+      public var description: Swift.String {
+        get
+      }
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.HeadingMonitoring.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+public enum LocationManagerBridgeEvent {
+  case didChangeLocationEnabled(_: Swift.Bool)
+  case didChangeAuthorization(_: CoreLocation.CLAuthorizationStatus)
+  case didChangeAccuracyAuthorization(_: CoreLocation.CLAccuracyAuthorization)
+  case locationUpdatesPaused
+  case locationUpdatesResumed
+  case receiveNewLocations(locations: [CoreLocation.CLLocation])
+  case didEnterRegion(_: CoreLocation.CLRegion)
+  case didExitRegion(_: CoreLocation.CLRegion)
+  case didStartMonitoringFor(_: CoreLocation.CLRegion)
+  case didFailWithError(_: any Swift.Error)
+  case monitoringDidFailFor(region: CoreLocation.CLRegion?, error: any Swift.Error)
+  case didVisit(visit: CoreLocation.CLVisit)
+  case didUpdateHeading(_: CoreLocation.CLHeading)
+  case didRange(beacons: [CoreLocation.CLBeacon], constraint: CoreLocation.CLBeaconIdentityConstraint)
+  case didFailRanginFor(constraint: CoreLocation.CLBeaconIdentityConstraint, error: any Swift.Error)
+}
+public protocol LocationManagerProtocol {
+  var delegate: (any CoreLocation.CLLocationManagerDelegate)? { get set }
+  var authorizationStatus: CoreLocation.CLAuthorizationStatus { get }
+  var accuracyAuthorization: CoreLocation.CLAccuracyAuthorization { get }
+  var activityType: CoreLocation.CLActivityType { get set }
+  var distanceFilter: CoreLocation.CLLocationDistance { get set }
+  var desiredAccuracy: CoreLocation.CLLocationAccuracy { get set }
+  var allowsBackgroundLocationUpdates: Swift.Bool { get set }
+  func locationServicesEnabled() -> Swift.Bool
+  func validatePlistConfigurationOrThrow(permission: SwiftLocation.LocationPermission) throws
+  func validatePlistConfigurationForTemporaryAccuracy(purposeKey: Swift.String) throws
+  func requestWhenInUseAuthorization()
+  func requestAlwaysAuthorization()
+  func requestTemporaryFullAccuracyAuthorization(withPurposeKey purposeKey: Swift.String, completion: (((any Swift.Error)?) -> Swift.Void)?)
+  func startUpdatingLocation()
+  func stopUpdatingLocation()
+  func requestLocation()
+  func startMonitoring(for region: CoreLocation.CLRegion)
+  func stopMonitoring(for region: CoreLocation.CLRegion)
+  func startMonitoringVisits()
+  func stopMonitoringVisits()
+  func startMonitoringSignificantLocationChanges()
+  func stopMonitoringSignificantLocationChanges()
+  func startUpdatingHeading()
+  func stopUpdatingHeading()
+  func startRangingBeacons(satisfying constraint: CoreLocation.CLBeaconIdentityConstraint)
+  func stopRangingBeacons(satisfying constraint: CoreLocation.CLBeaconIdentityConstraint)
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class SingleUpdateLocation : SwiftLocation.AnyTask {
+    public typealias Continuation = _Concurrency.CheckedContinuation<SwiftLocation.Tasks.ContinuousUpdateLocation.StreamEvent, any Swift.Error>
+    final public let uuid: Foundation.UUID
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    final public func didCancelled()
+    final public func willStart()
+    @objc deinit
+  }
+}
+public typealias AccuracyFilters = [SwiftLocation.AccuracyFilter]
+public enum AccuracyFilter {
+  case horizontal(CoreLocation.CLLocationAccuracy)
+  case vertical(CoreLocation.CLLocationAccuracy)
+  case speed(CoreLocation.CLLocationSpeedAccuracy)
+  case course(CoreLocation.CLLocationDirectionAccuracy)
+  case custom(_: ((CoreLocation.CLLocation) -> Swift.Bool))
+}
+public enum LocationAccuracy {
+  case best
+  case nearestTenMeters
+  case hundredMeters
+  case kilometer
+  case threeKilometers
+  case bestForNavigation
+  case custom(Swift.Double)
+}
+public enum LocationPermission {
+  case always
+  case whenInUse
+  public static func == (a: SwiftLocation.LocationPermission, b: SwiftLocation.LocationPermission) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension CoreLocation.CLLocationManager : SwiftLocation.LocationManagerProtocol {
+  public func locationServicesEnabled() -> Swift.Bool
+  public func validatePlistConfigurationOrThrow(permission: SwiftLocation.LocationPermission) throws
+  public func validatePlistConfigurationForTemporaryAccuracy(purposeKey: Swift.String) throws
+}
+extension CoreLocation.CLAccuracyAuthorization : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension CoreLocation.CLAuthorizationStatus : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class Authorization : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.Authorization.StreamEvent>
+    public enum StreamEvent {
+      case didChangeAuthorization(_: CoreLocation.CLAuthorizationStatus)
+      public var authorizationStatus: CoreLocation.CLAuthorizationStatus {
+        get
+      }
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.Authorization.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class BeaconMonitoring : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.BeaconMonitoring.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didRange(beacons: [CoreLocation.CLBeacon], constraint: CoreLocation.CLBeaconIdentityConstraint)
+      case didFailRanginFor(constraint: CoreLocation.CLBeaconIdentityConstraint, error: any Swift.Error)
+      public static func == (lhs: SwiftLocation.Tasks.BeaconMonitoring.StreamEvent, rhs: SwiftLocation.Tasks.BeaconMonitoring.StreamEvent) -> Swift.Bool
+      public var description: Swift.String {
+        get
+      }
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.BeaconMonitoring.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public var satisfying: CoreLocation.CLBeaconIdentityConstraint {
+      get
+    }
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+final public class Location {
+  final public var lastLocation: CoreLocation.CLLocation? {
+    get
+  }
+  #if compiler(>=5.3) && $EffectfulProp
+  final public var locationServicesEnabled: Swift.Bool {
+    get async
+  }
+  #endif
+  final public var authorizationStatus: CoreLocation.CLAuthorizationStatus {
+    get
+  }
+  final public var accuracyAuthorization: CoreLocation.CLAccuracyAuthorization {
+    get
+  }
+  final public var accuracy: SwiftLocation.LocationAccuracy {
+    get
+    set
+  }
+  final public var activityType: CoreLocation.CLActivityType {
+    get
+    set
+  }
+  final public var distanceFilter: CoreLocation.CLLocationDistance {
+    get
+    set
+  }
+  final public var allowsBackgroundLocationUpdates: Swift.Bool {
+    get
+    set
+  }
+  public init(locationManager: any SwiftLocation.LocationManagerProtocol = CLLocationManager(), allowsBackgroundLocationUpdates: Swift.Bool = false)
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoringLocationServices() async -> SwiftLocation.Tasks.LocationServicesEnabled.Stream
+  #endif
+  final public func stopMonitoringLocationServices()
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoringAuthorization() async -> SwiftLocation.Tasks.Authorization.Stream
+  #endif
+  final public func stopMonitoringAuthorization()
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoringAccuracyAuthorization() async -> SwiftLocation.Tasks.AccuracyAuthorization.Stream
+  #endif
+  final public func stopMonitoringAccuracyAuthorization()
+  #if compiler(>=5.3) && $AsyncAwait
+  @discardableResult
+  final public func requestPermission(_ permission: SwiftLocation.LocationPermission) async throws -> CoreLocation.CLAuthorizationStatus
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @discardableResult
+  final public func requestTemporaryPrecisionAuthorization(purpose key: Swift.String) async throws -> CoreLocation.CLAccuracyAuthorization
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoringLocations() async throws -> SwiftLocation.Tasks.ContinuousUpdateLocation.Stream
+  #endif
+  final public func stopUpdatingLocation()
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func requestLocation(accuracy filters: SwiftLocation.AccuracyFilters? = nil, timeout: Foundation.TimeInterval? = nil) async throws -> SwiftLocation.Tasks.ContinuousUpdateLocation.StreamEvent
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoring(region: CoreLocation.CLRegion) async throws -> SwiftLocation.Tasks.RegionMonitoring.Stream
+  #endif
+  final public func stopMonitoring(region: CoreLocation.CLRegion)
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoringVisits() async -> SwiftLocation.Tasks.VisitsMonitoring.Stream
+  #endif
+  final public func stopMonitoringVisits()
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startMonitoringSignificantLocationChanges() async -> SwiftLocation.Tasks.SignificantLocationMonitoring.Stream
+  #endif
+  final public func stopMonitoringSignificantLocationChanges()
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startUpdatingHeading() async -> SwiftLocation.Tasks.HeadingMonitoring.Stream
+  #endif
+  final public func stopUpdatingHeading()
+  #if compiler(>=5.3) && $AsyncAwait
+  final public func startRangingBeacons(satisfying: CoreLocation.CLBeaconIdentityConstraint) async -> SwiftLocation.Tasks.BeaconMonitoring.Stream
+  #endif
+  final public func stopRangingBeacons(satisfying: CoreLocation.CLBeaconIdentityConstraint)
+  @objc deinit
+}
+extension SwiftLocation.Tasks {
+  @_hasMissingDesignatedInitializers final public class RegionMonitoring : SwiftLocation.AnyTask {
+    public typealias Stream = _Concurrency.AsyncStream<SwiftLocation.Tasks.RegionMonitoring.StreamEvent>
+    public enum StreamEvent : Swift.CustomStringConvertible, Swift.Equatable {
+      case didEnterTo(region: CoreLocation.CLRegion)
+      case didExitTo(region: CoreLocation.CLRegion)
+      case didStartMonitoringFor(region: CoreLocation.CLRegion)
+      case monitoringDidFailFor(region: CoreLocation.CLRegion?, error: any Swift.Error)
+      public var description: Swift.String {
+        get
+      }
+      public static func == (lhs: SwiftLocation.Tasks.RegionMonitoring.StreamEvent, rhs: SwiftLocation.Tasks.RegionMonitoring.StreamEvent) -> Swift.Bool
+    }
+    final public let uuid: Foundation.UUID
+    final public var stream: SwiftLocation.Tasks.RegionMonitoring.Stream.Continuation?
+    final public var cancellable: (any SwiftLocation.CancellableTask)?
+    final public func receivedLocationManagerEvent(_ event: SwiftLocation.LocationManagerBridgeEvent)
+    @objc deinit
+  }
+}
+extension SwiftLocation.LocationPermission : Swift.Equatable {}
+extension SwiftLocation.LocationPermission : Swift.Hashable {}
